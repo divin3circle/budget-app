@@ -1,71 +1,36 @@
-import { currencyFormatter } from "../utils";
+export const Card = ({ name, amount, max }) => {
+  const displayWidthRatio = amount / max;
+  const displayWidth = Math.floor(displayWidthRatio * 100 );
 
-const Card = ({ name, amount, max }) => {
-  //card bg
-  let cardColor;
-  if (amount > max) {
-    cardColor = "#f5c6c5";
-  } else {
-    cardColor = "fff";
-  }
-  const cardStyle = {
-    backgroundColor: cardColor,
-  };
-  //percentage usage calculation
-  const rate = amount / max;
-  const value = rate * 100;
-  //conditional style assignment
-  let backgroundClass;
-  if (value <= 50) {
-    backgroundClass = "blue";
-  } else if (value > 50 && value < 75) {
-    backgroundClass = "yellow";
-  } else {
-    backgroundClass = "red";
-  }
-
-  const cardWidthStyle = {
-    width: `${value * 3.9}px`,
-    backgroundColor: backgroundClass,
-  };
 
   return (
-    <div
-      className="max-w-md my-6 mx-auto rounded-lg bg-slate-100 drop-shadow-2xl transition"
-      style={cardStyle}
-    >
-      <div>
-        <div className="flex justify-between items-baseline font-bold mb-3">
-          <div className="m-2 p-4">{name}</div>
-          <div className="flex items-baseline justify-end p-4">
-            {currencyFormatter.format(amount)}
-            <span className="text-gray-800/50 text-sm ml-1">
-              / {currencyFormatter.format(max)}
-            </span>
-          </div>
+    <div className="flex justify-center min-w-[500px]">
+      <div className="shadow-2xl mt-5 p-5 bg-slate-100  rounded-2xl">
+        <div className="flex justify-between mt-8">
+          <h1 className="whitespace-nowrap font-bold text-xl font-mono p-2 m-2">
+            {name}
+          </h1>
+          <p className="font-bold font-mono p-2 m-2 whitespace-nowrap">
+            Ksh.{amount} /<span className="text-slate-800/80"> Ksh.{max}</span>
+          </p>
         </div>
-        <div className="m-1 p-6 overflow-hidden">
-          <div className="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700">
+        <div className="p-2 m-1">
+          <div className="w-full bg-gray rounded-full h-2.5 dark:bg-gray-700 ">
             <div
-              className={`h-4 rounded-full text-xs text-center transition`}
-              style={cardWidthStyle}
-            >
-              <p className="font-bold relative bottom-4 left-0">
-                {Math.floor(value)}%
-              </p>
-            </div>
+              className="bg-blue-600 h-2.5 rounded-full"
+              style={{ width:"45%"  }}
+            ></div>
           </div>
-        </div>
-        <div className="flex justify-end m-2 p-2">
-          <button className="p-2 m-2 bg-slate-200 hover:bg-blue-500 rounded-l-lg">
-            Add Expense
-          </button>
-          <button className="p-2 m-2 bg-slate-200 hover:bg-blue-500 rounded-r-lg">
-            View Expense
-          </button>
+          <div className="flex justify-center p-2 mt-2 font-mono font-bold">
+            <p className="bg-blue-500 text-white rounded p-2 ">{displayWidth}%</p>
+          </div>
+          <div className="flex justify-end mt-4">
+            <button className="bg-blue-500 rounded-l p-2 font-bold font-mono text-white hover:bg-slate-100 hover:text-black">
+              Add Expense
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-export default Card;
